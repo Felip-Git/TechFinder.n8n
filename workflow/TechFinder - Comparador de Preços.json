@@ -1,0 +1,271 @@
+{
+  "name": "TechFinder - Comparador de Preços",
+  "nodes": [
+    {
+      "parameters": {
+        "formTitle": "TechFinder - Pesquisa de Produtos",
+        "formDescription": "Informe o produto de tecnologia que deseja encontrar.",
+        "formFields": {
+          "values": [
+            {
+              "fieldLabel": "Qual produto você deseja encontrar?",
+              "fieldName": "produto"
+            }
+          ]
+        },
+        "options": {
+          "customCss": "\n:root {\n  --color-primary: #2563eb;\n  --color-primary-shade-1: #1d4ed8;\n  --color-primary-shade-2: #1e40af;\n  --color-page-background: #f4f7fc;\n  --color-form-background: #ffffff;\n  --color-form-text: #172554;\n  --color-form-text-light: #64748b;\n  --color-input-background: #f8fafc;\n  --color-input-border: #dbe3ef;\n  --color-input-text: #1e293b;\n  --color-focus-border: #3b82f6;\n  --color-submit-btn-background: #2563eb;\n  --color-submit-btn-text: #ffffff;\n  --border-radius: 16px;\n}\n\n/* FUNDO GERAL */\nbody {\n  background:\n    radial-gradient(circle at 15% 15%, rgba(59, 130, 246, 0.10), transparent 32%),\n    radial-gradient(circle at 85% 85%, rgba(37, 99, 235, 0.10), transparent 35%),\n    linear-gradient(135deg, #f8faff 0%, #edf3fc 100%) !important;\n  font-family: Inter, Arial, sans-serif !important;\n  color: #1e293b !important;\n}\n\n/* CARTÃO DO FORMULÁRIO */\nform {\n  background: #ffffff !important;\n  border: 1px solid rgba(226, 232, 240, 0.9) !important;\n  border-radius: 22px !important;\n  box-shadow:\n    0 20px 50px rgba(30, 64, 175, 0.08),\n    0 4px 12px rgba(15, 23, 42, 0.03) !important;\n  padding: 38px !important;\n}\n\n/* TÍTULO */\nh1 {\n  color: #173b83 !important;\n  font-size: 30px !important;\n  font-weight: 800 !important;\n  letter-spacing: -1.2px !important;\n  line-height: 1.2 !important;\n  margin-bottom: 12px !important;\n}\n\n/* DESCRIÇÃO */\np {\n  color: #64748b !important;\n  line-height: 1.7 !important;\n}\n\n/* RÓTULOS DOS CAMPOS */\nlabel {\n  color: #334155 !important;\n  font-weight: 700 !important;\n  font-size: 14px !important;\n  margin-bottom: 10px !important;\n}\n\n/* CAMPO DE PESQUISA */\ninput {\n  width: 100% !important;\n  box-sizing: border-box !important;\n  background: #f8fafc !important;\n  border: 1.5px solid #dbe3ef !important;\n  border-radius: 12px !important;\n  padding: 16px !important;\n  min-height: 54px !important;\n  color: #1e293b !important;\n  font-size: 15px !important;\n  transition: all 0.2s ease !important;\n}\n\n/* FOCO NO CAMPO */\ninput:focus {\n  background: #ffffff !important;\n  border-color: #3b82f6 !important;\n  outline: none !important;\n  box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.12) !important;\n}\n\n/* BOTÃO DE PESQUISA */\nbutton[type=\"submit\"] {\n  width: 100% !important;\n  min-height: 56px !important;\n  background: linear-gradient(135deg, #2563eb, #1d4ed8) !important;\n  color: #ffffff !important;\n  border: none !important;\n  border-radius: 12px !important;\n  padding: 16px 24px !important;\n  font-size: 16px !important;\n  font-weight: 700 !important;\n  letter-spacing: 0.2px !important;\n  box-shadow: 0 7px 18px rgba(37, 99, 235, 0.20) !important;\n  transition: all 0.25s ease !important;\n}\n\n/* EFEITO DO BOTÃO */\nbutton[type=\"submit\"]:hover {\n  background: linear-gradient(135deg, #1d4ed8, #1e40af) !important;\n  transform: translateY(-2px) !important;\n  box-shadow: 0 11px 24px rgba(37, 99, 235, 0.27) !important;\n}\n\n/* BOTÃO AO CLICAR */\nbutton[type=\"submit\"]:active {\n  transform: translateY(0) !important;\n}\n\n/* RESPONSIVIDADE */\n@media (max-width: 600px) {\n  form {\n    padding: 24px !important;\n    border-radius: 18px !important;\n  }\n\n  h1 {\n    font-size: 25px !important;\n  }\n}\n"
+        }
+      },
+      "type": "n8n-nodes-base.formTrigger",
+      "typeVersion": 2.5,
+      "position": [
+        -192,
+        -400
+      ],
+      "id": "7ebb7d0b-6a24-4fac-adbf-5d07cc7ad5dc",
+      "name": "01 - Receber Pesquisa",
+      "webhookId": "7a5ec083-148a-4a8d-ac53-ddda12fdf747"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://google.serper.dev/shopping",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "X-API-KEY",
+              "value": "3ba6745f430059d61f871a1a4e5285350ecd15e4"
+            }
+          ]
+        },
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "q",
+              "value": "={{ $json.produto }}"
+            },
+            {
+              "name": "gl",
+              "value": "br"
+            },
+            {
+              "name": "hl",
+              "value": "pt-br"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.4,
+      "position": [
+        32,
+        -400
+      ],
+      "id": "fb8f967c-b46f-465b-8e28-025db85ac284",
+      "name": "02 - Buscar Ofertas"
+    },
+    {
+      "parameters": {
+        "jsCode": "\nconst resposta = $input.first().json;\n\n// Recupera o que o usuário pesquisou no formulário\nconst pesquisa = $('01 - Receber Pesquisa').first().json.produto || '';\n\n// Lojas e marketplaces aceitos\nconst lojasPermitidas = [\n  'net computadores',\n  'kabum',\n  'amazon.com.br',\n  'amazon',\n  'mercado livre',\n  'mercadolivre',\n  'magalu',\n  'magazine luiza',\n  'pichau',\n  'terabyte',\n  'terabyte shop',\n  'patoloco',\n  'gk infostore',\n  'waz',\n  'login informática',\n  'login informatica',\n  'guerra digital',\n  'oficina dos bits',\n  'chipart',\n  'casas bahia',\n  'fast shop'\n];\n\n// Normaliza textos\nfunction normalizar(texto) {\n  return String(texto || '')\n    .toLowerCase()\n    .normalize('NFD')\n    .replace(/[\\u0300-\\u036f]/g, '')\n    .replace(/\\s+/g, ' ')\n    .trim();\n}\n\n// Normaliza a pesquisa e o título dos produtos\nfunction normalizarModelo(texto) {\n  return normalizar(texto)\n    .replace(/\\brtx\\s*(\\d{4})\\b/g, 'rtx $1')\n    .replace(/\\b(\\d+)\\s*gb\\b/g, '$1gb');\n}\n\nconst pesquisaNormalizada = normalizarModelo(pesquisa);\n\n// Identifica o número do modelo pesquisado\nconst modeloPesquisa = pesquisaNormalizada.match(/\\brtx\\s*(\\d{4})\\b/);\n\n// Identifica variantes solicitadas\nconst pesquisaTi = /\\bti\\b/.test(pesquisaNormalizada);\nconst pesquisaSuper = /\\bsuper\\b/.test(pesquisaNormalizada);\n\n// Identifica a memória solicitada, se houver\nconst memoriaPesquisa = pesquisaNormalizada.match(/\\b(\\d+)gb\\b/);\n\n// Produtos retornados pelo Serper\nconst produtos = resposta.shopping || [];\n\n// Organiza os dados e converte os preços\nconst ofertas = produtos.map(produto => {\n  const precoTexto = produto.price || '';\n  const tituloOriginal = produto.title || '';\n\n  // Procura possíveis códigos de fabricante no título\n  const codigosEncontrados = tituloOriginal.match(\n    /[A-Z0-9-]{8,25}/gi\n  ) || [];\n\n  // Mantém somente sequências que tenham letras e números\n  const codigosValidos = codigosEncontrados.filter(codigo => {\n    const temLetra = /[A-Z]/i.test(codigo);\n    const temNumero = /[0-9]/.test(codigo);\n\n    return temLetra && temNumero;\n  });\n\n  // Seleciona o último código encontrado\n  const codigoModelo = codigosValidos.length > 0\n    ? codigosValidos[codigosValidos.length - 1].toUpperCase()\n    : null;\n\n  // Converte o preço para número\n  const correspondencia = precoTexto.match(/[\\d.]+,\\d{2}/);\n\n  let precoNumerico = null;\n\n  if (correspondencia) {\n    precoNumerico = Number(\n      correspondencia[0]\n        .replace(/\\./g, '')\n        .replace(',', '.')\n    );\n  }\n\n  // Identifica o tipo de link\n  const link = produto.link || '';\n\n  let tipoLink = 'Sem link disponível';\n\n  if (link.includes('google.com/search?ibp=oshop')) {\n    tipoLink = 'Google Shopping';\n  } else if (link) {\n    tipoLink = 'Link direto';\n  }\n\n  return {\n    titulo: produto.title || 'Produto sem nome',\n    loja: produto.source || 'Loja não informada',\n    preco: precoTexto,\n    precoNumerico,\n    link,\n    tipoLink,\n    codigoModelo,\n    imagem: produto.imageUrl || ''\n  };\n});\n\n// Mantém somente lojas permitidas\nconst ofertasBrasileiras = ofertas.filter(produto => {\n  const loja = normalizar(produto.loja);\n\n  return lojasPermitidas.some(nome =>\n    loja.includes(normalizar(nome))\n  );\n});\n\n// Filtra os modelos para corresponder à pesquisa\nconst ofertasRelevantes = ofertasBrasileiras.filter(produto => {\n  const titulo = normalizarModelo(produto.titulo);\n\n  // Exclui computadores e equipamentos completos\n  const termosEquipamentoCompleto = [\n    'computador',\n    'pc gamer',\n    'pc completo',\n    'computador gamer',\n    'notebook',\n    'laptop',\n    'desktop',\n    'cpu gamer',\n    'cpu intel',\n    'cpu amd',\n    'gabinete gamer',\n    'setup gamer',\n    'kit gamer',\n    'ryzen 5',\n    'ryzen 7',\n    'ryzen 9',\n    'intel core i3',\n    'intel core i5',\n    'intel core i7',\n    'intel core i9',\n    'processador'\n  ];\n\n  const equipamentoCompleto = termosEquipamentoCompleto.some(\n    termo => titulo.includes(termo)\n  );\n\n  if (equipamentoCompleto) {\n    return false;\n  }\n\n  // Confere o número exato do modelo\n  if (modeloPesquisa) {\n    const numeroModelo = modeloPesquisa[1];\n    const regexModelo = new RegExp(`\\\\brtx\\\\s*${numeroModelo}\\\\b`);\n\n    if (!regexModelo.test(titulo)) {\n      return false;\n    }\n  }\n\n  // Se a pesquisa não pediu Ti, exclui produtos Ti\n  const produtoTi = /\\bti\\b/.test(titulo);\n\n  if (produtoTi !== pesquisaTi) {\n    return false;\n  }\n\n  // Se a pesquisa não pediu Super, exclui produtos Super\n  const produtoSuper = /\\bsuper\\b/.test(titulo);\n\n  if (produtoSuper !== pesquisaSuper) {\n    return false;\n  }\n\n  // Se a pesquisa informou memória, exige essa memória no título\n  if (memoriaPesquisa) {\n    const memoriaProduto = new RegExp(\n      `\\\\b${memoriaPesquisa[1]}gb\\\\b`\n    );\n\n    if (!memoriaProduto.test(titulo)) {\n      return false;\n    }\n  }\n\n  return true;\n});\n\n// Remove ofertas sem preço\nconst ofertasComPreco = ofertasRelevantes.filter(\n  produto => produto.precoNumerico !== null\n);\n\n// Remove duplicações da mesma oferta\nconst ofertasSemDuplicatas = ofertasComPreco.filter(\n  (produto, indice, lista) =>\n    lista.findIndex(outro =>\n      normalizar(outro.titulo) === normalizar(produto.titulo) &&\n      normalizar(outro.loja) === normalizar(produto.loja) &&\n      outro.precoNumerico === produto.precoNumerico\n    ) === indice\n);\n\n// Ordena do menor para o maior preço\nconst ofertasOrdenadas = ofertasSemDuplicatas.sort(\n  (a, b) => a.precoNumerico - b.precoNumerico\n);\n\n// Adiciona a posição no ranking final\nreturn ofertasOrdenadas.map((oferta, indice) => ({\n  json: {\n    posicao: indice + 1,\n    ...oferta\n  }\n}));\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        256,
+        -400
+      ],
+      "id": "b5f53c98-07a2-46ca-b19c-41f375878ab7",
+      "name": "03 - Filtrar e Organizar Ofertas"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://google.serper.dev/search",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "X-API-KEY",
+              "value": "3ba6745f430059d61f871a1a4e5285350ecd15e4"
+            }
+          ]
+        },
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "q",
+              "value": "={{\n  $json.titulo +\n  ' site:' +\n  (\n    $json.loja.toLowerCase().includes('amazon') ? 'amazon.com.br' :\n    $json.loja.toLowerCase().includes('mercado') ? 'mercadolivre.com.br' :\n    $json.loja.toLowerCase().includes('kabum') ? 'kabum.com.br' :\n    $json.loja.toLowerCase().includes('pichau') ? 'pichau.com.br' :\n    $json.loja.toLowerCase().includes('terabyte') ? 'terabyteshop.com.br' :\n    $json.loja.toLowerCase().includes('magalu') || $json.loja.toLowerCase().includes('magazine') ? 'magazineluiza.com.br' :\n    ''\n  )\n}}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.4,
+      "position": [
+        480,
+        -336
+      ],
+      "id": "8e58ffe7-640b-4726-9136-d8be63658b64",
+      "name": "04 - Buscar Links nas Lojas"
+    },
+    {
+      "parameters": {
+        "mode": "combine",
+        "combineBy": "combineByPosition",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 3.2,
+      "position": [
+        704,
+        -400
+      ],
+      "id": "c4e9f37e-3d2b-489a-a0dd-0fc3c4efdf16",
+      "name": "05 - Combinar Resultados"
+    },
+    {
+      "parameters": {
+        "jsCode": "\nconst itens = $input.all();\n\n// Domínios oficiais das lojas aceitas\nconst dominiosLojas = [\n  { nome: 'amazon', dominio: 'amazon.com.br' },\n  { nome: 'mercado livre', dominio: 'mercadolivre.com.br' },\n  { nome: 'mercadolivre', dominio: 'mercadolivre.com.br' },\n  { nome: 'kabum', dominio: 'kabum.com.br' },\n  { nome: 'pichau', dominio: 'pichau.com.br' },\n  { nome: 'terabyte', dominio: 'terabyteshop.com.br' },\n  { nome: 'magalu', dominio: 'magazineluiza.com.br' },\n  { nome: 'magazine luiza', dominio: 'magazineluiza.com.br' },\n  { nome: 'patoloco', dominio: 'patoloco.com.br' },\n  { nome: 'gk infostore', dominio: 'gkinfostore.com.br' },\n  { nome: 'waz', dominio: 'waz.com.br' },\n  { nome: 'login informatica', dominio: 'login.com.br' },\n  { nome: 'guerra digital', dominio: 'gueradigital.com.br' },\n  { nome: 'oficina dos bits', dominio: 'oficinadosbits.com.br' },\n  { nome: 'chipart', dominio: 'chipart.com.br' },\n  { nome: 'casas bahia', dominio: 'casasbahia.com.br' },\n  { nome: 'fast shop', dominio: 'fastshop.com.br' }\n];\n\n// Normaliza textos\nfunction normalizar(texto) {\n  return String(texto || '')\n    .toLowerCase()\n    .normalize('NFD')\n    .replace(/[\\u0300-\\u036f]/g, '')\n    .replace(/\\s+/g, ' ')\n    .trim();\n}\n\n// Identifica o domínio esperado pela loja\nfunction identificarDominio(loja) {\n  const nome = normalizar(loja);\n\n  const correspondencia = dominiosLojas.find(item =>\n    nome.includes(normalizar(item.nome))\n  );\n\n  return correspondencia ? correspondencia.dominio : null;\n}\n\n// Extrai características importantes do produto\nfunction extrairCaracteristicas(titulo) {\n  const texto = normalizar(titulo);\n\n  const modelo = texto.match(/\\brtx\\s*(\\d{4})\\b/);\n  const memoria = texto.match(/\\b(8|12|16|24|32)\\s*gb\\b/);\n\n  return {\n    modelo: modelo ? modelo[1] : null,\n    memoria: memoria ? memoria[1] : null,\n    ti: /\\bti\\b/.test(texto),\n    super: /\\bsuper\\b/.test(texto)\n  };\n}\n\n// Analisa o endereço sem depender de new URL()\nfunction analisarLink(link) {\n  const linkLimpo = String(link || '').trim();\n\n  const partes = linkLimpo.match(\n    /^https?:\\/\\/([^/:?#]+)(?::\\d+)?(\\/[^?#]*)?/i\n  );\n\n  if (!partes) {\n    return null;\n  }\n\n  return {\n    dominio: partes[1].toLowerCase(),\n    caminho: partes[2] || ''\n  };\n}\n\n// Lista de marcas conhecidas\nconst marcas = [\n  'peladn',\n  'pcyes',\n  'galax',\n  'msi',\n  'asus',\n  'gigabyte',\n  'zotac',\n  'gainward',\n  'palit',\n  'loongscale',\n  'inno3d',\n  'pny',\n  'sapphire',\n  'xfx',\n  'powercolor'\n];\n\n// Valida se o resultado corresponde à oferta original\nfunction validarResultado(oferta, resultado, dominioEsperado) {\n  if (!resultado || !resultado.link || !dominioEsperado) {\n    return false;\n  }\n\n  const linkAnalisado = analisarLink(resultado.link);\n\n  if (!linkAnalisado) {\n    return false;\n  }\n\n  const dominioEncontrado = linkAnalisado.dominio;\n  const caminho = linkAnalisado.caminho;\n\n  // Confere o domínio da loja\n  if (\n    dominioEncontrado !== dominioEsperado &&\n    !dominioEncontrado.endsWith('.' + dominioEsperado)\n  ) {\n    return false;\n  }\n\n  // Aceita somente páginas de produto\n  if (!/\\/dp\\/|\\/p\\//i.test(caminho)) {\n    return false;\n  }\n\n  const original = extrairCaracteristicas(oferta.titulo);\n\n  const encontrado = extrairCaracteristicas(\n    resultado.title + ' ' + (resultado.snippet || '')\n  );\n\n  // Exige o mesmo modelo RTX\n  if (!original.modelo || original.modelo !== encontrado.modelo) {\n    return false;\n  }\n\n  // Exige a mesma memória quando identificada\n  if (\n    original.memoria &&\n    original.memoria !== encontrado.memoria\n  ) {\n    return false;\n  }\n\n  // Confere Ti e Super\n  if (original.ti !== encontrado.ti) {\n    return false;\n  }\n\n  if (original.super !== encontrado.super) {\n    return false;\n  }\n\n  // Confere a marca quando identificada na oferta\n  const textoOriginal = normalizar(oferta.titulo);\n\n  const textoEncontrado = normalizar(\n    resultado.title + ' ' + (resultado.snippet || '')\n  );\n\n  const marcaOriginal = marcas.find(marca =>\n    textoOriginal.includes(marca)\n  );\n\n  if (\n    marcaOriginal &&\n    !textoEncontrado.includes(marcaOriginal)\n  ) {\n    return false;\n  }\n\n  return true;\n}\n\n// Processa cada oferta\nreturn itens.map(item => {\n  const oferta = item.json;\n\n  const dominioEsperado = identificarDominio(oferta.loja);\n\n  const resultados = Array.isArray(oferta.organic)\n    ? oferta.organic\n    : [];\n\n  // Procura o primeiro resultado que passe em todas as validações\n  const resultadoValido = resultados.find(resultado =>\n    validarResultado(oferta, resultado, dominioEsperado)\n  );\n\n  return {\n    json: {\n      ...oferta,\n\n      linkDireto: resultadoValido\n        ? resultadoValido.link\n        : null,\n\n      tituloLinkValidado: resultadoValido\n        ? resultadoValido.title\n        : null,\n\n      tipoLinkFinal: resultadoValido\n        ? 'Link direto validado'\n        : 'Link do Google Shopping',\n\n      linkFinal: resultadoValido\n        ? resultadoValido.link\n        : oferta.link,\n\n      validacaoLink: resultadoValido\n        ? 'Correspondência encontrada'\n        : 'Nenhuma correspondência confiável encontrada',\n\n      dominioEsperado\n    }\n  };\n});\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        928,
+        -400
+      ],
+      "id": "093b3e85-f1a0-48d7-afb8-3c4f553fd26e",
+      "name": "06 - Validar Links dos Produtos"
+    },
+    {
+      "parameters": {
+        "jsCode": "\nconst itens = $input.all();\n\n// Escapa caracteres especiais para evitar problemas no HTML\nfunction escaparHTML(valor) {\n  return String(valor ?? '')\n    .replace(/&/g, '&amp;')\n    .replace(/</g, '&lt;')\n    .replace(/>/g, '&gt;')\n    .replace(/\"/g, '&quot;')\n    .replace(/'/g, '&#39;');\n}\n\n// Converte o preço para número\nfunction obterPrecoNumerico(oferta) {\n  if (typeof oferta.precoNumerico === 'number') {\n    return oferta.precoNumerico;\n  }\n\n  const texto = String(oferta.preco || '');\n  const encontrado = texto.match(/[\\d.]+,\\d{2}/);\n\n  if (!encontrado) return null;\n\n  return Number(\n    encontrado[0]\n      .replace(/\\./g, '')\n      .replace(',', '.')\n  );\n}\n\n// Formata o preço em reais\nfunction formatarPreco(oferta) {\n  const valor = obterPrecoNumerico(oferta);\n\n  if (valor !== null && Number.isFinite(valor)) {\n    return valor.toLocaleString('pt-BR', {\n      style: 'currency',\n      currency: 'BRL'\n    });\n  }\n\n  return oferta.preco || 'Preço não informado';\n}\n\n// Descobre a oferta mais barata\nconst precos = itens\n  .map(item => obterPrecoNumerico(item.json))\n  .filter(valor => valor !== null && Number.isFinite(valor));\n\nconst menorPreco = precos.length\n  ? Math.min(...precos)\n  : null;\n\n// Monta os cartões dos produtos\nconst cartoes = itens.map((item, indice) => {\n  const oferta = item.json;\n\n  const titulo = escaparHTML(oferta.titulo || 'Produto sem título');\n  const loja = escaparHTML(oferta.loja || 'Loja não informada');\n  const preco = escaparHTML(formatarPreco(oferta));\n  const valorNumerico = obterPrecoNumerico(oferta);\n\n  // Procura a imagem do produto\n  const imagemOriginal = oferta.imagem || oferta.imageUrl || '';\n  const imagem = /^https?:\\/\\/[^\\s\"'<>]+$/i.test(String(imagemOriginal))\n    ? escaparHTML(imagemOriginal)\n    : '';\n\n  // Valida o link de acesso\n  const linkOriginal = String(oferta.linkFinal || '').trim();\n  const linkSeguro = /^https?:\\/\\/[^\\s\"'<>]+$/i.test(linkOriginal)\n    ? escaparHTML(linkOriginal)\n    : '';\n\n  const tipoLink = escaparHTML(\n    oferta.tipoLinkFinal || 'Link de acesso'\n  );\n\n  const maisBarato =\n    menorPreco !== null &&\n    valorNumerico !== null &&\n    valorNumerico === menorPreco;\n\n  return `\n    <article class=\"produto\">\n\n      <div class=\"produto-topo\">\n        <span class=\"numero\">OFERTA ${indice + 1}</span>\n        ${\n          maisBarato\n            ? '<span class=\"selo\">MENOR PREÇO</span>'\n            : ''\n        }\n      </div>\n\n      <div class=\"imagem-container\">\n        ${\n          imagem\n            ? `<img\n                class=\"imagem-produto\"\n                src=\"${imagem}\"\n                alt=\"${titulo}\"\n                loading=\"lazy\"\n                onerror=\"this.style.display='none'; this.nextElementSibling.style.display='flex';\"\n              >\n              <div class=\"imagem-fallback\" style=\"display:none;\">\n                <span>Imagem indisponível</span>\n              </div>`\n            : `<div class=\"imagem-fallback\">\n                <span>Imagem indisponível</span>\n              </div>`\n        }\n      </div>\n\n      <div class=\"produto-info\">\n        <h2>${titulo}</h2>\n\n        <p class=\"loja\">\n          <span class=\"icone-loja\">▣</span>\n          ${loja}\n        </p>\n\n        <div class=\"preco-container\">\n          <span class=\"preco-legenda\">Preço anunciado</span>\n          <p class=\"preco\">${preco}</p>\n        </div>\n\n        <div class=\"rodape-card\">\n          <span class=\"tipo-link\">${tipoLink}</span>\n\n          ${\n            linkSeguro\n              ? `<a\n                  class=\"botao\"\n                  href=\"${linkSeguro}\"\n                  target=\"_blank\"\n                  rel=\"noopener noreferrer\"\n                >\n                  Ver oferta <span>↗</span>\n                </a>`\n              : `<span class=\"botao-indisponivel\">\n                  Link indisponível\n                </span>`\n          }\n        </div>\n      </div>\n\n    </article>\n  `;\n}).join('');\n\n// Resumo da pesquisa\nconst resumoMenorPreco = menorPreco !== null\n  ? menorPreco.toLocaleString('pt-BR', {\n      style: 'currency',\n      currency: 'BRL'\n    })\n  : 'Não disponível';\n\n// Página HTML\nconst html = `\n<!DOCTYPE html>\n<html lang=\"pt-BR\">\n\n<head>\n<meta charset=\"UTF-8\">\n<meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\n\n<title>TechFinder | Resultados</title>\n\n<style>\n  * {\n    box-sizing: border-box;\n  }\n\n  body {\n    margin: 0;\n    padding: 0;\n    background: #f5f7fc;\n    font-family: Arial, Helvetica, sans-serif;\n    color: #172033;\n  }\n\n  .pagina {\n    min-height: 100vh;\n  }\n\n  /* CABEÇALHO */\n\n  .cabecalho {\n    background: linear-gradient(120deg, #102b63, #1746a2, #2563eb);\n    padding: 32px 24px 42px;\n    color: white;\n  }\n\n  .cabecalho-conteudo {\n    max-width: 1180px;\n    margin: auto;\n  }\n\n  .marca {\n    display: flex;\n    align-items: center;\n    gap: 12px;\n    margin-bottom: 34px;\n  }\n\n  .logo {\n    width: 42px;\n    height: 42px;\n    border-radius: 12px;\n    background: rgba(255,255,255,0.16);\n    display: flex;\n    align-items: center;\n    justify-content: center;\n    font-size: 23px;\n    font-weight: bold;\n  }\n\n  .marca h1 {\n    margin: 0;\n    font-size: 25px;\n    letter-spacing: -0.7px;\n  }\n\n  .marca span {\n    display: block;\n    font-size: 11px;\n    color: #c8d8ff;\n    margin-top: 3px;\n    letter-spacing: 1.5px;\n    text-transform: uppercase;\n  }\n\n  .titulo-pagina {\n    margin: 0;\n    font-size: 30px;\n    letter-spacing: -0.8px;\n  }\n\n  .subtitulo {\n    margin: 10px 0 0;\n    color: #dbe7ff;\n    font-size: 15px;\n  }\n\n  /* CONTEÚDO */\n\n  .conteudo {\n    max-width: 1180px;\n    margin: -20px auto 0;\n    padding: 0 24px 50px;\n    position: relative;\n  }\n\n  /* RESUMO */\n\n  .resumo {\n    display: grid;\n    grid-template-columns: repeat(2, minmax(0, 1fr));\n    gap: 16px;\n    margin-bottom: 30px;\n  }\n\n  .resumo-card {\n    background: white;\n    border: 1px solid #e6eaf2;\n    border-radius: 13px;\n    padding: 19px 22px;\n    box-shadow: 0 5px 18px rgba(20, 40, 80, 0.06);\n  }\n\n  .resumo-label {\n    color: #718096;\n    font-size: 13px;\n    margin-bottom: 8px;\n  }\n\n  .resumo-valor {\n    color: #183b80;\n    font-size: 23px;\n    font-weight: 700;\n  }\n\n  .resumo-card.destaque .resumo-valor {\n    color: #07834d;\n  }\n\n  /* LISTA DE PRODUTOS */\n\n  .secao-titulo {\n    display: flex;\n    justify-content: space-between;\n    align-items: center;\n    gap: 12px;\n    margin-bottom: 18px;\n  }\n\n  .secao-titulo h2 {\n    margin: 0;\n    font-size: 20px;\n    color: #1c2c48;\n  }\n\n  .ordenacao {\n    color: #718096;\n    font-size: 12px;\n  }\n\n  .produtos {\n    display: grid;\n    grid-template-columns: repeat(3, minmax(0, 1fr));\n    gap: 20px;\n  }\n\n  /* CARTÃO */\n\n  .produto {\n    background: white;\n    border: 1px solid #e5eaf3;\n    border-radius: 15px;\n    overflow: hidden;\n    box-shadow: 0 5px 18px rgba(25, 45, 85, 0.045);\n    transition: transform 0.2s ease, box-shadow 0.2s ease;\n  }\n\n  .produto:hover {\n    transform: translateY(-4px);\n    box-shadow: 0 12px 26px rgba(25, 45, 85, 0.10);\n  }\n\n  .produto-topo {\n    display: flex;\n    justify-content: space-between;\n    align-items: center;\n    padding: 15px 17px 0;\n    min-height: 35px;\n  }\n\n  .numero {\n    color: #718096;\n    font-size: 10px;\n    font-weight: bold;\n    letter-spacing: 1px;\n  }\n\n  .selo {\n    color: #087a49;\n    background: #e6f7ee;\n    padding: 6px 9px;\n    border-radius: 20px;\n    font-size: 9px;\n    font-weight: bold;\n    letter-spacing: 0.5px;\n  }\n\n  /* IMAGEM */\n\n  .imagem-container {\n    height: 175px;\n    padding: 14px 20px;\n    display: flex;\n    align-items: center;\n    justify-content: center;\n    background: #fff;\n  }\n\n  .imagem-produto {\n    width: 100%;\n    height: 100%;\n    object-fit: contain;\n  }\n\n  .imagem-fallback {\n    width: 100%;\n    height: 100%;\n    background: #f3f6fb;\n    border: 1px dashed #d5deed;\n    border-radius: 10px;\n    display: flex;\n    align-items: center;\n    justify-content: center;\n    color: #94a3b8;\n    font-size: 12px;\n  }\n\n  /* INFORMAÇÕES */\n\n  .produto-info {\n    padding: 17px 19px 20px;\n    border-top: 1px solid #f0f2f7;\n  }\n\n  .produto h2 {\n    font-size: 15px;\n    line-height: 1.5;\n    font-weight: 700;\n    color: #202e45;\n    margin: 0 0 13px;\n    min-height: 67px;\n  }\n\n  .loja {\n    color: #718096;\n    font-size: 12px;\n    margin: 0 0 18px;\n  }\n\n  .icone-loja {\n    color: #2563eb;\n    margin-right: 5px;\n  }\n\n  .preco-container {\n    border-top: 1px solid #edf0f5;\n    padding-top: 14px;\n  }\n\n  .preco-legenda {\n    color: #8a96a9;\n    font-size: 11px;\n  }\n\n  .preco {\n    color: #07834d;\n    font-size: 25px;\n    font-weight: 800;\n    letter-spacing: -0.7px;\n    margin: 5px 0 16px;\n  }\n\n  .rodape-card {\n    display: flex;\n    flex-direction: column;\n    gap: 12px;\n  }\n\n  .tipo-link {\n    color: #718096;\n    font-size: 11px;\n  }\n\n  .botao {\n    display: flex;\n    align-items: center;\n    justify-content: center;\n    gap: 8px;\n    width: 100%;\n    padding: 12px;\n    border-radius: 8px;\n    background: #2563eb;\n    color: white;\n    text-decoration: none;\n    font-size: 13px;\n    font-weight: bold;\n    transition: background 0.2s ease;\n  }\n\n  .botao:hover {\n    background: #1746b5;\n  }\n\n  .botao-indisponivel {\n    display: block;\n    text-align: center;\n    padding: 12px;\n    border-radius: 8px;\n    background: #f1f3f7;\n    color: #8a96a9;\n    font-size: 12px;\n  }\n\n  /* RODAPÉ */\n\n  .rodape {\n    max-width: 1180px;\n    margin: 0 auto;\n    padding: 20px 24px 30px;\n    border-top: 1px solid #e4e9f1;\n    color: #8995a8;\n    font-size: 11px;\n    text-align: center;\n  }\n\n  /* RESPONSIVIDADE */\n\n  @media (max-width: 900px) {\n    .produtos {\n      grid-template-columns: repeat(2, minmax(0, 1fr));\n    }\n  }\n\n  @media (max-width: 580px) {\n    .cabecalho {\n      padding: 25px 18px 38px;\n    }\n\n    .titulo-pagina {\n      font-size: 24px;\n    }\n\n    .conteudo {\n      padding: 0 14px 35px;\n    }\n\n    .resumo {\n      gap: 10px;\n    }\n\n    .resumo-card {\n      padding: 15px;\n    }\n\n    .resumo-valor {\n      font-size: 18px;\n    }\n\n    .produtos {\n      grid-template-columns: 1fr;\n    }\n\n    .imagem-container {\n      height: 190px;\n    }\n\n    .produto h2 {\n      min-height: auto;\n    }\n  }\n</style>\n</head>\n\n<body>\n\n<div class=\"pagina\">\n\n  <header class=\"cabecalho\">\n    <div class=\"cabecalho-conteudo\">\n\n      <div class=\"marca\">\n        <div class=\"logo\">T</div>\n        <div>\n          <h1>TechFinder</h1>\n          <span>Compare. Encontre. Economize.</span>\n        </div>\n      </div>\n\n      <h2 class=\"titulo-pagina\">\n        Resultados da sua pesquisa\n      </h2>\n\n      <p class=\"subtitulo\">\n        Encontramos ofertas para você comparar.\n      </p>\n\n    </div>\n  </header>\n\n  <main class=\"conteudo\">\n\n    <section class=\"resumo\">\n\n      <div class=\"resumo-card\">\n        <div class=\"resumo-label\">Ofertas encontradas</div>\n        <div class=\"resumo-valor\">${itens.length}</div>\n      </div>\n\n      <div class=\"resumo-card destaque\">\n        <div class=\"resumo-label\">Menor preço encontrado</div>\n        <div class=\"resumo-valor\">${resumoMenorPreco}</div>\n      </div>\n\n    </section>\n\n    <section>\n\n      <div class=\"secao-titulo\">\n        <h2>Ofertas disponíveis</h2>\n        <span class=\"ordenacao\">Compare as opções</span>\n      </div>\n\n      <div class=\"produtos\">\n\n        ${\n          cartoes ||\n          '<p>Nenhuma oferta foi encontrada para sua pesquisa.</p>'\n        }\n\n      </div>\n\n    </section>\n\n  </main>\n\n  <footer class=\"rodape\">\n    TechFinder © 2026 — Pesquisa e comparação de preços.\n    Preços e condições podem mudar. Confira os detalhes na loja.\n  </footer>\n\n</div>\n\n</body>\n</html>\n`;\n\nreturn [\n  {\n    json: {\n      html,\n      totalOfertas: itens.length\n    }\n  }\n];\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1152,
+        -400
+      ],
+      "id": "22bf5b4d-c33b-4f15-b5f5-dd417531f4ee",
+      "name": "07 - Gerar Página de Resultados"
+    },
+    {
+      "parameters": {
+        "operation": "completion",
+        "respondWith": "showText",
+        "responseText": "={{ $json.html }}"
+      },
+      "type": "n8n-nodes-base.form",
+      "typeVersion": 2.5,
+      "position": [
+        1376,
+        -400
+      ],
+      "id": "dc6365f9-adfb-4f6b-87ed-aaa832460b88",
+      "name": "08 - Exibir Resultados",
+      "webhookId": "94dc97f6-eb6f-4a92-a3ed-6e41dda272b4"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "01 - Receber Pesquisa": {
+      "main": [
+        [
+          {
+            "node": "02 - Buscar Ofertas",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "02 - Buscar Ofertas": {
+      "main": [
+        [
+          {
+            "node": "03 - Filtrar e Organizar Ofertas",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "03 - Filtrar e Organizar Ofertas": {
+      "main": [
+        [
+          {
+            "node": "05 - Combinar Resultados",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "04 - Buscar Links nas Lojas",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "04 - Buscar Links nas Lojas": {
+      "main": [
+        [
+          {
+            "node": "05 - Combinar Resultados",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "05 - Combinar Resultados": {
+      "main": [
+        [
+          {
+            "node": "06 - Validar Links dos Produtos",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "06 - Validar Links dos Produtos": {
+      "main": [
+        [
+          {
+            "node": "07 - Gerar Página de Resultados",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "07 - Gerar Página de Resultados": {
+      "main": [
+        [
+          {
+            "node": "08 - Exibir Resultados",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate"
+  },
+  "versionId": "b5c5f15a-77ea-40fb-a150-78dcd22a2de0",
+  "meta": {
+    "instanceId": "c4b67600add0dc4ac4ba8fec867340de1e7f0b6fd28ac63f05676b4cf3f51781"
+  },
+  "id": "HEa6nUOFz31gAfnw",
+  "tags": []
+}
