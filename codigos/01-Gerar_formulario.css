@@ -1,0 +1,124 @@
+
+:root {
+  --color-primary: #2563eb;
+  --color-primary-shade-1: #1d4ed8;
+  --color-primary-shade-2: #1e40af;
+  --color-page-background: #f4f7fc;
+  --color-form-background: #ffffff;
+  --color-form-text: #172554;
+  --color-form-text-light: #64748b;
+  --color-input-background: #f8fafc;
+  --color-input-border: #dbe3ef;
+  --color-input-text: #1e293b;
+  --color-focus-border: #3b82f6;
+  --color-submit-btn-background: #2563eb;
+  --color-submit-btn-text: #ffffff;
+  --border-radius: 16px;
+}
+
+/* FUNDO GERAL */
+body {
+  background:
+    radial-gradient(circle at 15% 15%, rgba(59, 130, 246, 0.10), transparent 32%),
+    radial-gradient(circle at 85% 85%, rgba(37, 99, 235, 0.10), transparent 35%),
+    linear-gradient(135deg, #f8faff 0%, #edf3fc 100%) !important;
+  font-family: Inter, Arial, sans-serif !important;
+  color: #1e293b !important;
+}
+
+/* CARTÃO DO FORMULÁRIO */
+form {
+  background: #ffffff !important;
+  border: 1px solid rgba(226, 232, 240, 0.9) !important;
+  border-radius: 22px !important;
+  box-shadow:
+    0 20px 50px rgba(30, 64, 175, 0.08),
+    0 4px 12px rgba(15, 23, 42, 0.03) !important;
+  padding: 38px !important;
+}
+
+/* TÍTULO */
+h1 {
+  color: #173b83 !important;
+  font-size: 30px !important;
+  font-weight: 800 !important;
+  letter-spacing: -1.2px !important;
+  line-height: 1.2 !important;
+  margin-bottom: 12px !important;
+}
+
+/* DESCRIÇÃO */
+p {
+  color: #64748b !important;
+  line-height: 1.7 !important;
+}
+
+/* RÓTULOS DOS CAMPOS */
+label {
+  color: #334155 !important;
+  font-weight: 700 !important;
+  font-size: 14px !important;
+  margin-bottom: 10px !important;
+}
+
+/* CAMPO DE PESQUISA */
+input {
+  width: 100% !important;
+  box-sizing: border-box !important;
+  background: #f8fafc !important;
+  border: 1.5px solid #dbe3ef !important;
+  border-radius: 12px !important;
+  padding: 16px !important;
+  min-height: 54px !important;
+  color: #1e293b !important;
+  font-size: 15px !important;
+  transition: all 0.2s ease !important;
+}
+
+/* FOCO NO CAMPO */
+input:focus {
+  background: #ffffff !important;
+  border-color: #3b82f6 !important;
+  outline: none !important;
+  box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.12) !important;
+}
+
+/* BOTÃO DE PESQUISA */
+button[type="submit"] {
+  width: 100% !important;
+  min-height: 56px !important;
+  background: linear-gradient(135deg, #2563eb, #1d4ed8) !important;
+  color: #ffffff !important;
+  border: none !important;
+  border-radius: 12px !important;
+  padding: 16px 24px !important;
+  font-size: 16px !important;
+  font-weight: 700 !important;
+  letter-spacing: 0.2px !important;
+  box-shadow: 0 7px 18px rgba(37, 99, 235, 0.20) !important;
+  transition: all 0.25s ease !important;
+}
+
+/* EFEITO DO BOTÃO */
+button[type="submit"]:hover {
+  background: linear-gradient(135deg, #1d4ed8, #1e40af) !important;
+  transform: translateY(-2px) !important;
+  box-shadow: 0 11px 24px rgba(37, 99, 235, 0.27) !important;
+}
+
+/* BOTÃO AO CLICAR */
+button[type="submit"]:active {
+  transform: translateY(0) !important;
+}
+
+/* RESPONSIVIDADE */
+@media (max-width: 600px) {
+  form {
+    padding: 24px !important;
+    border-radius: 18px !important;
+  }
+
+  h1 {
+    font-size: 25px !important;
+  }
+}
